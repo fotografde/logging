@@ -1,0 +1,26 @@
+{
+    "name": "gotphoto/logging",
+    "description": "Integrate a common way for log handling.",
+    "type": "library",
+    "require": {
+        "php": "^7|^8",
+        "monolog/monolog": "^2.7|^3.1",
+        "newrelic/monolog-enricher": "^2.0"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^4.24",
+        "illuminate/support": "^9.19"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Gotphoto\\Logging\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Sergei Baikin",
+            "email": "sergei.baikin@fotograf.de"
+        }
+    ]
+}
