@@ -1,0 +1,15 @@
+include:
+  - project: 'gotphoto/infrastructure/ci/gitlab-templates'
+    ref: main
+    file: 'php-app.yaml'
+
+variables:
+  IMAGE_VERSION: "8.1_0"
+
+deploy:
+  stage: deploy
+  extends:
+    - .only_tags
+  script:
+    - apk add curl
+    - 'curl --header "Job-Token: $CI_JOB_TOKEN" --data tag=<tag> "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/packages/composer"'

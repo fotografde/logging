@@ -1,0 +1,18 @@
+version: '3.4'
+
+networks:
+  gotphoto-logging:
+    driver: bridge
+services:
+  php:
+    image: registry.gitlab.com/gotphoto/infrastructure/logging/app:8.1_0-develop
+    volumes:
+      - ./:/srv/www/app
+    restart: unless-stopped
+    networks:
+      - gotphoto-logging
+    depends_on:
+      - db-mysql
+    working_dir: /srv/www/app
+    environment:
+      TIMEZONE: Europe/Germany
