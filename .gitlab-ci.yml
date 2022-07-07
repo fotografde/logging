@@ -19,6 +19,10 @@ build-check:deploy:
     - echo Skipp
   artifacts: { }
 
+sonarcloud-check:
+  rules:
+    - when: never
+
 package:stage:
   rules:
     - when: never
