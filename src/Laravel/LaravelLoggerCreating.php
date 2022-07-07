@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Gotphoto\Logging\Laravel;
 
+use Gotphoto\Logging\Formatter;
 use Illuminate\Support\Facades\App;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
