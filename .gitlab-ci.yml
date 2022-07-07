@@ -8,6 +8,7 @@ variables:
 
 deploy:
   stage: deploy
+  image: alpine
   extends:
     - .only_tags
   script:
