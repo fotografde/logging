@@ -10,7 +10,7 @@ ENV EXTENSIONS_BUILD_DEPS \
         libxml2-dev \
 #php-event start
         libevent-dev \
-        libssl-dev \
+        libssl-dev
 #php-event end
 
 ENV PHP_EXTS_BASE \
@@ -19,23 +19,17 @@ ENV PHP_EXTS_BASE \
         bcmath \
         zip \
         pcntl
-ENV PHP_EXTS_APP \
-        curl
 # hadolint ignore=DL3008,SC2046
 RUN cat /etc/os-release && apt-get update \
 # install deps
     && apt-get install -y --no-install-recommends ${EXTENSIONS_BUILD_DEPS} \
         # extensions
-        && docker-php-ext-configure gd --with-freetype --with-jpeg \
-        	&& docker-php-ext-install -j$(nproc) gd\
         && docker-php-ext-install sockets && docker-php-ext-enable sockets\
             && pecl install event && docker-php-ext-enable event && mv /usr/local/etc/php/conf.d/docker-php-ext-event.ini /usr/local/etc/php/conf.d/z99docker-php-ext-event.ini \
         && docker-php-ext-install \
                 ${PHP_EXTS_BASE} \
-                ${PHP_EXTS_APP} \
             && docker-php-ext-enable \
                 ${PHP_EXTS_BASE} \
-                ${PHP_EXTS_APP} \
     # clean up
     && apt-get purge \
         -y --auto-remove \
