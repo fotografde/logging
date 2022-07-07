@@ -33,13 +33,13 @@ add in `config/logging.php` in `channels` section:
 ```php
         'gotphoto' => [
             'driver' => 'custom',
-            'via' => App\Framework\Logging\GotphotoLogger::class,
+            'via' => Gotphoto\Logging\LaravelLoggerCreating::class,
             'app_name' => 'Service Name',
             'channel' => 'app'(security/reauest/order)
         ]
         'security' => [
             'driver' => 'custom',
-            'via' => App\Framework\Logging\GotphotoLogger::class,
+            'via' => Gotphoto\Logging\LaravelLoggerCreating::class,
             'app_name' => 'Service Name',
             'channel' => 'security'
         ],
