@@ -91,9 +91,9 @@ final class Formatter extends NormalizerFormatter
      */
     protected function normalize($data, int $depth = 0)
     {
-        assert(is_array($data));
-        /** @var array{extra?:array{newrelic-context?:array}, datetime: \Monolog\DateTimeImmutable} $data */
         if ($depth == 0) {
+            assert(is_array($data));
+            /** @var array{extra?:array{newrelic-context?:array}, datetime: \Monolog\DateTimeImmutable} $data */
             if (isset($data['extra']['newrelic-context'])) {
                 $data = array_merge($data, $data['extra']['newrelic-context']);
                 /** @psalm-suppress MixedArrayAccess we checked that it is an array */
