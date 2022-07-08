@@ -127,7 +127,7 @@ final class Formatter extends NormalizerFormatter
              */
             $additionalContext = $exceptionProvider($e);
             if (!empty($additionalContext)) {
-                $data['context'] = \array_merge($data['context'] ?? [], $additionalContext);
+                $data['context'] = ($data['context'] ?? []) + $additionalContext;
             }
         }
 

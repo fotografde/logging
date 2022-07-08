@@ -9,7 +9,12 @@
     },
     "require-dev": {
         "vimeo/psalm": "^4.24",
-        "illuminate/support": "^9.19"
+        "illuminate/support": "^9.19",
+        "symfony/http-kernel": "^6.1",
+        "symfony/dependency-injection": "^6.1",
+        "symfony/config": "^6.1",
+        "aws/aws-sdk-php": "^3.231",
+        "guzzlehttp/guzzle": "^7.4"
     },
     "license": "MIT",
     "autoload": {
