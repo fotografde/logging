@@ -1,5 +1,5 @@
 {
-    "name": "gotphoto/logging",
+    "name": "fotografde/logging",
     "description": "Integrate a common way for log handling.",
     "type": "library",
     "require": {
