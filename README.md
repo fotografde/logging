@@ -60,13 +60,13 @@ add in `config/logging.php` in `channels` section:
         'gotphoto' => [
             'driver' => 'custom',
             'via' => new Gotphoto\Logging\Laravel\LaravelLoggerCreating,
-            'app_name' => 'Service Name',
+            'app_name' => 'ServiceName',
             'channel' => 'app'(security/reauest/order)
         ]
         'security' => [
             'driver' => 'custom',
             'via' => new Gotphoto\Logging\Laravel\LaravelLoggerCreating,
-            'app_name' => 'Service Name',
+            'app_name' => 'ServiceName',
             'channel' => 'security'
         ],
 ```
@@ -75,7 +75,14 @@ Do not forget to set one of them as default one in the same file : `'default' =>
 
 ## Symfony
 
-Add bundle `new Gotphoto\Logging\Symfony\SymfonyLoggingBundle()`;
+Add bundle `Gotphoto\Logging\Symfony\SymfonyLoggingBundle::class => ['all' => true],`;
+
+Add config `gotphoto_logging.yaml`
+
+```yaml
+symfony_logging:
+ app_name: ServiceName
+```
 
 make monolog configuration looks like this
 ```yaml
