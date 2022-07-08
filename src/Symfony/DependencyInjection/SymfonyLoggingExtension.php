@@ -9,15 +9,15 @@ use Gotphoto\Logging\Formatter;
 use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
 
 /**
  * @internal
  */
-final class SymfonyLoggingExtension extends Extension
+final class SymfonyLoggingExtension extends ConfigurableExtension
 {
-    public function load(array $configs, ContainerBuilder $container)
+    public function loadInternal(array $configs, ContainerBuilder $container)
     {
         $loader = new PhpFileLoader(
             $container,

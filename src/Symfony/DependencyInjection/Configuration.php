@@ -19,8 +19,7 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->cannotBeEmpty()
                 ->end()
-            ->end()
-        ->end();
+            ->end();
 
         return $treeBuilder;
     }
