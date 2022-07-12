@@ -6,7 +6,6 @@ use Aws\Exception\AwsException;
 
 class AwsExceptionContext implements ExceptionContext
 {
-
     /**
      * @return array{aws_error_code: null|string, aws_error_message: null|string, aws_error_type: null|string}
      */
