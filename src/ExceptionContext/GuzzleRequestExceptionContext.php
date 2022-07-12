@@ -7,7 +7,7 @@ use GuzzleHttp\Exception\RequestException;
 class GuzzleRequestExceptionContext implements ExceptionContext
 {
     /**
-     * @returnreturn array{message?: string}
+     * @return array{message?: string}
      */
     public function __invoke(RequestException $exception): array
     {
