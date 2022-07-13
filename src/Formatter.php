@@ -117,7 +117,7 @@ final class Formatter extends NormalizerFormatter
     protected function normalizeException(\Throwable $e, int $depth = 0)
     {
         /** @var array{message: string, context?: array<string, mixed>} $data */
-        $data = parent::normalizeException($e);
+        $data = parent::normalizeException($e, $depth);
 
         $exceptionProviders = $this->exceptionContextProviderMap[\get_class($e)] ?? [];
 
