@@ -33,7 +33,7 @@ final class Formatter extends NormalizerFormatter
         string $applicationName,
         string $environment,
         array $exceptionContextProviderMap = [],
-        ?string $systemName = null
+        string $systemName = null
     ) {
         // logstash requires a ISO 8601 format date with optional millisecond precision.
         parent::__construct('Y-m-d\TH:i:s.uP');
