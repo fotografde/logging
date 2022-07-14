@@ -61,13 +61,15 @@ add in `config/logging.php` in `channels` section:
             'driver' => 'custom',
             'via' => new Gotphoto\Logging\Laravel\LaravelLoggerCreating,
             'app_name' => 'ServiceName',
-            'channel' => 'app'(security/reauest/order)
+            'channel' => 'app'(security/reauest/order),
+            'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
         ]
         'security' => [
             'driver' => 'custom',
             'via' => new Gotphoto\Logging\Laravel\LaravelLoggerCreating,
             'app_name' => 'ServiceName',
-            'channel' => 'security'
+            'channel' => 'security',
+            'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
         ],
 ```
 
