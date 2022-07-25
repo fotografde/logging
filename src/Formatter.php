@@ -119,7 +119,7 @@ final class Formatter extends NormalizerFormatter
         /** @var array{message: string, context?: array<string, mixed>} $data */
         $data = parent::normalizeException($e, $depth);
 
-        $exceptionProviders = $this->exceptionContextProviderMap[\get_class($e)] ?? [];
+        $exceptionProviders = $this->getExceptionContexts($e);
 
         foreach ($exceptionProviders as $exceptionProvider) {
             /**
@@ -132,5 +132,22 @@ final class Formatter extends NormalizerFormatter
         }
 
         return $data;
+    }
+
+    /**
+     * @return array<callable>
+     */
+    protected function getExceptionContexts(\Throwable $e): array {
+        if (isset($this->exceptionContextProviderMap[\get_class($e)])) {
+            return $this->exceptionContextProviderMap[\get_class($e)];
+        }
+        $exceptionContexts = [];
+        foreach (array_keys($this->exceptionContextProviderMap) as $className) {
+            if ($e instanceof $className) {
+                $exceptionContexts = array_merge($exceptionContexts + $this->exceptionContextProviderMap[$className]);
+            }
+        }
+
+        return $exceptionContexts;
     }
 }
