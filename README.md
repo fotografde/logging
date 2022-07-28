@@ -63,6 +63,7 @@ add in `config/logging.php` in `channels` section:
             'app_name' => 'ServiceName',
             'channel' => 'app'(security/reauest/order),
             'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
+            'level' => Monolog\Logger::INFO, //OPTIONAL
         ]
         'security' => [
             'driver' => 'custom',
@@ -70,6 +71,7 @@ add in `config/logging.php` in `channels` section:
             'app_name' => 'ServiceName',
             'channel' => 'security',
             'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
+            'level' => Monolog\Logger::INFO, //OPTIONAL
         ],
 ```
 
