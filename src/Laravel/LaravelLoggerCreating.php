@@ -12,6 +12,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\App;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Processor\PsrLogMessageProcessor;
 use NewRelic\Monolog\Enricher\Processor;
 
 final class LaravelLoggerCreating
@@ -30,6 +31,7 @@ final class LaravelLoggerCreating
 
         $log = new Logger($channel);
         $log->pushProcessor(new Processor());
+        $log->pushProcessor(new PsrLogMessageProcessor());
 
         foreach ($processors as $processor) {
             $log->pushProcessor($processor);
