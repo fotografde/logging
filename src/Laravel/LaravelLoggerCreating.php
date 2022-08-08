@@ -28,6 +28,8 @@ final class LaravelLoggerCreating
         $processors = $config['processors'] ?? [];
         /** @var int $level */
         $level = $config['level'] ?? Logger::DEBUG;
+        /** @var string $stream */
+        $stream = $config['stream_to'] ?? 'php://stderr';
 
         $log = new Logger($channel);
         $log->pushProcessor(new Processor());
@@ -37,7 +39,7 @@ final class LaravelLoggerCreating
             $log->pushProcessor($processor);
         }
 
-        $streamHandler = new StreamHandler('php://stderr', $level);
+        $streamHandler = new StreamHandler($stream, $level);
 
         $handler = $streamHandler;
         $env     = App::environment();

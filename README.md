@@ -64,6 +64,7 @@ add in `config/logging.php` in `channels` section:
             'channel' => 'app'(security/reauest/order),
             'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
             'level' => Monolog\Logger::INFO, //OPTIONAL
+            'stream_to' => 'php://stderr', //OPTIONAL
         ]
         'security' => [
             'driver' => 'custom',
@@ -72,6 +73,7 @@ add in `config/logging.php` in `channels` section:
             'channel' => 'security',
             'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
             'level' => Monolog\Logger::INFO, //OPTIONAL
+            'stream_to' => 'php://stderr', //OPTIONAL
         ],
 ```
 
