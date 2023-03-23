@@ -8,12 +8,14 @@ use Aws\Exception\AwsException;
 use Gotphoto\Logging\ExceptionContext\AwsExceptionContext;
 use Gotphoto\Logging\ExceptionContext\GuzzleRequestExceptionContext;
 use Gotphoto\Logging\Formatter;
+use Gotphoto\Logging\NewrelicProcessor;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\App;
 use Monolog\Handler\StreamHandler;
+use Monolog\Level;
 use Monolog\Logger;
+use Monolog\Processor\ProcessorInterface;
 use Monolog\Processor\PsrLogMessageProcessor;
-use NewRelic\Monolog\Enricher\Processor;
 
 final class LaravelLoggerCreating
 {
@@ -24,15 +26,15 @@ final class LaravelLoggerCreating
         assert(!isset($config['processors']) || is_array($config['processors']));
         $appName = $config['app_name'];
         $channel = $config['channel'];
-        /** @var \Monolog\Processor\ProcessorInterface[] $processors */
+        /** @var ProcessorInterface[] $processors */
         $processors = $config['processors'] ?? [];
         /** @var int $level */
-        $level = $config['level'] ?? Logger::DEBUG;
+        $level = $config['level'] ?? Level::Debug;
         /** @var string $stream */
         $stream = $config['stream_to'] ?? 'php://stderr';
 
         $log = new Logger($channel);
-        $log->pushProcessor(new Processor());
+        $log->pushProcessor(new NewrelicProcessor());
         $log->pushProcessor(new PsrLogMessageProcessor());
 
         foreach ($processors as $processor) {

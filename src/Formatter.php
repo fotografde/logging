@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Gotphoto\Logging;
 
 use Monolog\Formatter\NormalizerFormatter;
+use Monolog\LogRecord;
 
 final class Formatter extends NormalizerFormatter
 {
@@ -46,7 +47,7 @@ final class Formatter extends NormalizerFormatter
     /**
      * {@inheritdoc}
      */
-    public function format(array $record): string
+    public function format(LogRecord $record): string
     {
         /** @var array{timestamp: int, datetime: string} $data */
         $data = parent::format($record);
@@ -88,8 +89,9 @@ final class Formatter extends NormalizerFormatter
      * `$data['extra']['newrelic-context']` array to top level of record,
      * converts `datetime` object to `timestamp` top level element represented
      * as milliseconds since the UNIX epoch, and finally, normalizes the data
+     * @inheritdoc
      */
-    protected function normalize($data, int $depth = 0)
+    protected function normalize(mixed $data, int $depth = 0): mixed
     {
         if ($depth === 0) {
             assert(is_array($data));

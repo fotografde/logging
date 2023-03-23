@@ -11,8 +11,6 @@ services:
     restart: unless-stopped
     networks:
       - gotphoto-logging
-    depends_on:
-      - db-mysql
     working_dir: /srv/www/app
     environment:
       TIMEZONE: Europe/Germany
