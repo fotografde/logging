@@ -29,7 +29,7 @@ final class LaravelLoggerCreating
         $channel = $config['channel'];
         /** @var ProcessorInterface[] $processors */
         $processors = $config['processors'] ?? [];
-        /** @var array<class-string<\Throwable>, non-empty-list<ExceptionContext>> $exceptionContexts */
+        /** @var array<string, array<array-key, callable>> $exceptionContexts */
         $exceptionContexts = $config['exceptionContexts'] ?? [];
         /** @var int $level */
         $level = $config['level'] ?? Level::Debug;
