@@ -72,6 +72,10 @@ add in `config/logging.php` in `channels` section:
             'app_name' => 'ServiceName',
             'channel' => 'security',
             'processors' => [new Monolog\Processor\ProcessorInterface()], //OPTIONAL
+            'exceptionContexts' => [ //OPTIONAL
+                RequestException::class => [new GuzzleRequestExceptionContext()],
+                AwsException::class => [new AwsExceptionContext()],
+            ], //OPTIONAL
             'level' => Monolog\Logger::INFO, //OPTIONAL
             'stream_to' => 'php://stderr', //OPTIONAL
         ],

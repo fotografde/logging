@@ -6,6 +6,7 @@ namespace Gotphoto\Logging\Laravel;
 
 use Aws\Exception\AwsException;
 use Gotphoto\Logging\ExceptionContext\AwsExceptionContext;
+use Gotphoto\Logging\ExceptionContext\ExceptionContext;
 use Gotphoto\Logging\ExceptionContext\GuzzleRequestExceptionContext;
 use Gotphoto\Logging\Formatter;
 use Gotphoto\Logging\NewrelicProcessor;
@@ -28,6 +29,8 @@ final class LaravelLoggerCreating
         $channel = $config['channel'];
         /** @var ProcessorInterface[] $processors */
         $processors = $config['processors'] ?? [];
+        /** @var array<class-string<\Throwable>, non-empty-list<ExceptionContext>> $exceptionContexts */
+        $exceptionContexts = $config['exceptionContexts'] ?? [];
         /** @var int $level */
         $level = $config['level'] ?? Level::Debug;
         /** @var string $stream */
@@ -44,12 +47,12 @@ final class LaravelLoggerCreating
         $streamHandler = new StreamHandler($stream, $level);
 
         $handler = $streamHandler;
-        $env     = App::environment();
+        $env = App::environment();
         $handler->setFormatter(
-            new Formatter($appName, (is_string($env) ? $env : "undefined"), [
+            new Formatter($appName, (is_string($env) ? $env : "undefined"), array_merge($exceptionContexts, [
                 RequestException::class => [new GuzzleRequestExceptionContext()],
-                AwsException::class     => [new AwsExceptionContext()],
-            ])
+                AwsException::class => [new AwsExceptionContext()],
+            ]))
         );
         $log->pushHandler($handler);
 
