@@ -115,7 +115,6 @@ return static function (MonologConfig $monolog, ContainerConfigurator $container
     $monolog->handler('otel')
         ->type('service')
         ->id(Handler::class)
-        ->formatter(OtelFormatter::class)
         // log start from info messages (debug is lowest level)
         ->level('info');
     
@@ -134,7 +133,6 @@ Otel:
 ```
         ->type('service')
         ->id(Handler::class)
-        ->formatter(OtelFormatter::class)
 ```
 
 ### Exception context
