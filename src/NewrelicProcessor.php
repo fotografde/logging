@@ -14,6 +14,8 @@ class NewrelicProcessor implements ProcessorInterface
      * Returns the given record with the New Relic linking metadata added
      * if a compatible New Relic extension is loaded, otherwise returns the
      * given record unmodified
+     *
+     * @return LogRecord The processed record
      */
     public function __invoke(LogRecord $record)
     {

@@ -9,9 +9,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class SymfonyLoggingBundle extends Bundle
 {
-    /**
-     * @psalm-suppress MissingReturnType can not use with php 7.0
-     */
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

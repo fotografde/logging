@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Gotphoto\Logging\Laravel;
 
+use App\Lib\Log\OtelFormatter;
 use Aws\Exception\AwsException;
 use Gotphoto\Logging\ExceptionContext\AwsExceptionContext;
-use Gotphoto\Logging\ExceptionContext\ExceptionContext;
 use Gotphoto\Logging\ExceptionContext\GuzzleRequestExceptionContext;
 use Gotphoto\Logging\Formatter;
 use Gotphoto\Logging\NewrelicProcessor;
@@ -17,6 +17,9 @@ use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\ProcessorInterface;
 use Monolog\Processor\PsrLogMessageProcessor;
+use OpenTelemetry\API\Globals;
+use OpenTelemetry\Contrib\Logs\Monolog\Handler;
+use Psr\Log\LogLevel;
 
 final class LaravelLoggerCreating
 {
@@ -55,6 +58,18 @@ final class LaravelLoggerCreating
             ]))
         );
         $log->pushHandler($handler);
+
+        $otelHandler = new Handler(
+            Globals::loggerProvider(),
+            LogLevel::INFO
+        );
+        $otelHandler->setFormatter(
+            new \Gotphoto\Logging\OtelFormatter([
+                RequestException::class => [new GuzzleRequestExceptionContext()],
+                AwsException::class => [new AwsExceptionContext()],
+            ])
+        );
+        $log->pushHandler($otelHandler);
 
         return $log;
     }

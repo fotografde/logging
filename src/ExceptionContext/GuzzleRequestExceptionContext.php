@@ -13,7 +13,7 @@ class GuzzleRequestExceptionContext implements ExceptionContext
     {
         /**
          * @psalm-suppress PossiblyNullReference
-         * @psalm-suppress RedundantConditionGivenDocblockType
+         * @psalm-suppress RedundantCondition
          */
         if ($exception->getResponse() !== null && $exception->getResponse()->getBody() !== null) {
             return ['message' => $exception->getResponse()->getBody()->getContents()];

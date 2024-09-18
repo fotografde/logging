@@ -95,30 +95,47 @@ symfony_logging:
 ```
 
 make monolog configuration looks like this
-```yaml
-monolog:
-    handlers:
-        handler1:
-            type: stream
-            path: "php://stderr"
-            formatter: 'Gotphoto\Logging\Formatter'
-        main:
-            type: stream
-            path: "php://stderr"
-            formatter: 'Gotphoto\Logging\Formatter'
-            level: info
-            channels: [ "!something"]
-        handler2:
-            formatter: 'Gotphoto\Logging\Formatter'
+
+```php
+<?php declare(strict_types=1);
+
+use Gotphoto\Logging\Formatter;
+use Gotphoto\Logging\OtelFormatter;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Config\MonologConfig;
+
+return static function (MonologConfig $monolog, ContainerConfigurator $containerConfigurator): void {
+
+    $monolog->handler('newrelic')
+        ->type('stream')
+        ->path('php://stderr')
+        ->formatter(Formatter::class)
+        // log start from info messages (debug is lowest level)
+        ->level('info');
+    $monolog->handler('otel')
+        ->type('service')
+        ->id(Handler::class)
+        ->formatter(OtelFormatter::class)
+        // log start from info messages (debug is lowest level)
+        ->level('info');
+    
+};
 
 ```
-Where the most important things are 
+Where the most important things are:
+
+NewRelic:
 ```
-type: stream
-path: "php://stderr"
-formatter: 'Gotphoto\Logging\Formatter'
+        ->type('stream')
+        ->path('php://stderr')
+        ->formatter(Formatter::class)
 ```
-And `main` is a fully working example
+Otel:
+```
+        ->type('service')
+        ->id(Handler::class)
+        ->formatter(OtelFormatter::class)
+```
 
 ### Exception context
 Works in Symfony automatically. Just create implementation for the interface `Gotphoto\Logging\ExceptionContext\ExceptionContext` and add it as a

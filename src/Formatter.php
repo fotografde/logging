@@ -49,8 +49,9 @@ final class Formatter extends NormalizerFormatter
      */
     public function format(LogRecord $record): string
     {
-        /** @var array{timestamp: int, datetime: string} $data */
+        /** @var array{timestamp: int, datetime: string, extra?:array, context?:array} $data */
         $data = parent::format($record);
+        /** @psalm-suppress RiskyTruthyFalsyComparison this is okay null or empty string */
         if (empty($data['datetime'])) {
             $data['datetime'] = gmdate('c');
         }
@@ -100,6 +101,7 @@ final class Formatter extends NormalizerFormatter
                 $data = array_merge($data, $data['extra']['newrelic-context']);
                 /** @psalm-suppress MixedArrayAccess we checked that it is an array */
                 unset($data['extra']['newrelic-context']);
+                /** @psalm-suppress RiskyTruthyFalsyComparison this is okay null or empty string */
                 if (empty($data['extra'])) {
                     unset($data['extra']);
                 }
