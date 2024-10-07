@@ -13,7 +13,6 @@ use Gotphoto\Logging\NewrelicProcessor;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\App;
 use Monolog\Handler\StreamHandler;
-use Monolog\Level;
 use Monolog\Logger;
 use Monolog\Processor\ProcessorInterface;
 use Monolog\Processor\PsrLogMessageProcessor;
@@ -35,7 +34,7 @@ final class LaravelLoggerCreating
         /** @var array<string, array<array-key, callable>> $exceptionContexts */
         $exceptionContexts = $config['exceptionContexts'] ?? [];
         /** @var int $level */
-        $level = $config['level'] ?? Level::Debug;
+        $level = $config['level'] ?? Logger::DEBUG;
         /** @var string $stream */
         $stream = $config['stream_to'] ?? 'php://stderr';
 

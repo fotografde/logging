@@ -47,7 +47,7 @@ final class Formatter extends NormalizerFormatter
     /**
      * {@inheritdoc}
      */
-    public function format(LogRecord $record): string
+    public function format(array $record): string
     {
         /** @var array{timestamp: int, datetime: string, extra?:array, context?:array} $data */
         $data = parent::format($record);
