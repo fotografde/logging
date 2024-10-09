@@ -3,7 +3,7 @@
     "description": "Integrate a common way for log handling.",
     "type": "library",
     "require": {
-        "php": ">=8.1",
+        "php": "^8.2",
         "monolog/monolog": "^3",
         "open-telemetry/opentelemetry-logger-monolog": "^1.0"
     },
