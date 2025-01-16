@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
  */
 final class SymfonyLoggingExtension extends ConfigurableExtension
 {
-    protected function loadInternal(array $mergedConfig, ContainerBuilder $container): void
+    public function loadInternal(array $configs, ContainerBuilder $container)
     {
         $loader = new PhpFileLoader(
             $container,
