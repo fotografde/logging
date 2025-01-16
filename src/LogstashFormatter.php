@@ -44,6 +44,10 @@ final class LogstashFormatter extends ExceptionNormalizerFormatter
         if (empty($data['datetime'])) {
             $data['datetime'] = gmdate('c');
         }
+        /** @psalm-suppress RiskyTruthyFalsyComparison this is okay null or empty string */
+        if (empty($data['timestamp'])) {
+            $data['timestamp'] = time();
+        }
         $message = [
             '@timestamp' => $data['datetime'],
             '@version' => 1,
