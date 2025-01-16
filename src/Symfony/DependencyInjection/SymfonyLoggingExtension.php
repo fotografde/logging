@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Gotphoto\Logging\Symfony\DependencyInjection;
 
 use Gotphoto\Logging\ExceptionContext\ExceptionContext;
-use Gotphoto\Logging\Formatter;
+use Gotphoto\Logging\LogstashFormatter;
 use Symfony\Component\Config\Exception\FileLocatorFileNotFoundException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -21,18 +21,21 @@ final class SymfonyLoggingExtension extends ConfigurableExtension
     {
         $loader = new PhpFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../config')
+            new FileLocator(__DIR__ . '/../config'),
         );
         $loader->load('services.php');
         $env = $container->getParameter('kernel.environment');
         try {
+            /** @psalm-suppress PossiblyInvalidCast */
             $loader->load("services_{$env}.php");
         } catch (FileLocatorFileNotFoundException $e) {
             //ignore if no file for env
         }
 
-        $container->getDefinition(Formatter::class)
-            ->setArgument('$applicationName', $configs['app_name'])
+        /** @psalm-suppress PossiblyUndefinedStringArrayOffset */
+        $container
+            ->getDefinition(LogstashFormatter::class)
+            ->setArgument('$applicationName', $mergedConfig['app_name'])
             ->setArgument('$environment', $env);
 
         $container
