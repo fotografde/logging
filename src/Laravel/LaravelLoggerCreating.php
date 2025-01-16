@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Gotphoto\Logging\Laravel;
 
-use App\Lib\Log\OtelFormatter;
 use Aws\Exception\AwsException;
 use Gotphoto\Logging\ExceptionContext\AwsExceptionContext;
 use Gotphoto\Logging\ExceptionContext\GuzzleRequestExceptionContext;
-use Gotphoto\Logging\Formatter;
-use Gotphoto\Logging\NewrelicProcessor;
+use Gotphoto\Logging\LogstashFormatter;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\App;
 use Monolog\Handler\StreamHandler;
@@ -40,7 +38,6 @@ final class LaravelLoggerCreating
         $stream = $config['stream_to'] ?? 'php://stderr';
 
         $log = new Logger($channel);
-        $log->pushProcessor(new NewrelicProcessor());
         $log->pushProcessor(new PsrLogMessageProcessor());
 
         foreach ($processors as $processor) {
@@ -51,23 +48,25 @@ final class LaravelLoggerCreating
 
         $handler = $streamHandler;
         $env = App::environment();
+        /** @psalm-suppress MixedArgumentTypeCoercion */
         $handler->setFormatter(
-            new Formatter($appName, (is_string($env) ? $env : "undefined"), array_merge($exceptionContexts, [
+            new LogstashFormatter($appName, (is_string($env) ? $env : "undefined"), array_merge($exceptionContexts, [
                 RequestException::class => [new GuzzleRequestExceptionContext()],
                 AwsException::class => [new AwsExceptionContext()],
-            ]))
+            ])),
         );
         $log->pushHandler($handler);
 
         $otelHandler = new Handler(
             Globals::loggerProvider(),
-            LogLevel::INFO
+            LogLevel::INFO,
         );
+        /** @psalm-suppress ArgumentTypeCoercion */
         $otelHandler->setFormatter(
             new \Gotphoto\Logging\OtelFormatter([
                 RequestException::class => [new GuzzleRequestExceptionContext()],
                 AwsException::class => [new AwsExceptionContext()],
-            ])
+            ]),
         );
         $log->pushHandler($otelHandler);
 

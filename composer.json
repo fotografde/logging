@@ -5,14 +5,14 @@
     "require": {
         "php": "^8.2",
         "monolog/monolog": "^3",
-        "open-telemetry/opentelemetry-logger-monolog": "^1.0"
+        "open-telemetry/opentelemetry-logger-monolog": "^1.0.0"
     },
     "require-dev": {
         "vimeo/psalm": "^5.26.1",
         "illuminate/support": "^9.19",
-        "symfony/http-kernel": "^6.1",
+        "symfony/http-kernel": "^7.2",
         "symfony/dependency-injection": "^6.1",
-        "symfony/config": "^6.1",
+        "symfony/config": "^7.2",
         "aws/aws-sdk-php": "^3.231",
         "guzzlehttp/guzzle": "^7.4"
     },
