@@ -99,7 +99,7 @@ make monolog configuration looks like this
 ```php
 <?php declare(strict_types=1);
 
-use Gotphoto\Logging\Formatter;
+use Gotphoto\Logging\LogstashFormatter;
 use Gotphoto\Logging\OtelFormatter;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Config\MonologConfig;
@@ -109,7 +109,7 @@ return static function (MonologConfig $monolog, ContainerConfigurator $container
     $monolog->handler('newrelic')
         ->type('stream')
         ->path('php://stderr')
-        ->formatter(Formatter::class)
+        ->formatter(LogstashFormatter::class)
         // log start from info messages (debug is lowest level)
         ->level('info');
     $monolog->handler('otel')
@@ -127,7 +127,7 @@ NewRelic:
 ```
         ->type('stream')
         ->path('php://stderr')
-        ->formatter(Formatter::class)
+        ->formatter(LogstashFormatter::class)
 ```
 Otel:
 ```
